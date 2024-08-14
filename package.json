@@ -5,7 +5,7 @@
   "scripts": {
     "pD": "node --watch ./js/productDetails",
     "sL": "node --watch ./js/shoppingList",
-    "index": "node --watch ./js/index",
+    "index": "node --watch ./index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

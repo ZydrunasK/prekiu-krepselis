@@ -35,6 +35,7 @@ const singleProductShoppingList = [
 
 const emptyList = [];
 
+
 function shoppingList(arr) {
     if (Array.isArray(arr) === false) {
         return 'ERROR: input must be an array'
@@ -44,21 +45,24 @@ function shoppingList(arr) {
         return 'Šiuo metu, jūsų prekių krepšelis yra tuščias.';
     }
 
-
+    
+    //names array - pav | longest name - pavL
     let pav = [];
-    for (let i = 0; i < arr.length; i++) {          // cycle fills array with names
-        pav.push(arr[i].name);                                      
-    }
-    let pavIlgiai = [...pav].sort((a, b) => b.length - a.length);       // sort  array by name length
-    const pavL = pavIlgiai[0].length            // longest name length(is in position 0 because of sort)
+    for (let i = 0; i < arr.length; i++) {          
+            pav.push(arr[i].name);                                      
+        }
+    let pavIlgiai = [...pav].sort((a, b) => b.length - a.length);     
+    const pavL = pavIlgiai[0].length            // longest name length is in position 0 because of sort
 
+    //amount array - kiek | longest amount - kiekL
     let kiek = [];
-for (let i = 0; i < arr.length; i++) {          // cycle fills array with amounts
-        kiek.push(arr[i].amount);           
-    }
-    let kiekIlgiai = [...kiek].sort((a, b) => b.length - a.length);     // sort by length
+    for (let i = 0; i < arr.length; i++) {          
+            kiek.push(arr[i].amount);           
+        }
+    let kiekIlgiai = [...kiek].sort((a, b) => b.length - a.length);     
     const kiekL = kiekIlgiai[0].toString().length;      // turns longest number to string to count length
 
+    //unitPrice array - uPrice | longest unitPrice - pavL
     let uPrice = [];
     for (let i = 0; i < arr.length; i++) {
         let num = (arr[i].unitPrice * 0.01).toFixed(2);
@@ -67,8 +71,15 @@ for (let i = 0; i < arr.length; i++) {          // cycle fills array with amount
     let uPriceIlgiai = [...uPrice].sort((a, b) => b.length - a.length);
     const uPriceL = uPriceIlgiai[0].toString().length;
 
-
-
+    //total price array - total | longest total price - totalL
+    let total = [];
+    for (let i = 0; i < arr.length; i++) {
+        let num = uPrice[i] * kiek[i];
+        total.push(parseFloat(num));  
+    }
+    let totalIlgiai = ([...total].sort((a, b) => b.length - a.length));
+    const totalL = totalIlgiai[0].toString().length;
+    
 
     const title = 'Pavadinimas  | Kiekis  | Vieneto Kaina | Viso mokėti';
     const lines = '-'.repeat(title.length);
@@ -79,6 +90,9 @@ for (let i = 0; i < arr.length; i++) {          // cycle fills array with amount
     console.log(kiekL);  
     console.log(uPriceIlgiai);  
     console.log(uPriceL);  
+    console.log(totalIlgiai);  
+    console.log(totalL);  
+    
 
     return '';
 
