@@ -72,22 +72,32 @@ function shoppingList(arr) {
     let totalIlgiai = ([...total].sort((a, b) => b - a));
     const totalL = totalIlgiai[0].toString().length;
     
+    let preL = (arr.length.toString().length) + 1;
 
-    const title = 'Pavadinimas  | Kiekis  | Vieneto Kaina | Viso mokėti';
-    const line = '-';
-    for (let i = 0; i < arr.length; i++) {
 
-        const title = (`Pavadinimas`);
-
-        let c1 = `${i + 1}. ${pav[i]} ${' '.repeat(pavL - pav[i].length)}|`;
-        let c2 = `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`;
-        let c3 = `${uPrice[i]} Eur ${' '.repeat((uPriceL - uPrice[i].toString().length))}|`;
-        let c4 = `${total[i]} Eur ${' '.repeat(totalL - total[i].toString().length)}|`; 
-        console.log(c1, c2, c3, c4);
-
+    
+    // make array of longest thingies and add to full title
+    let fullTitle = ``;
+    const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
+    for (let i = 0; i < titlesList.length; i++) {
         
+    }
+    let titleP1 = `${titlesList[0]} ${' '.repeat((pavL - titlesList[0].length)+ preL)} | `
+    let titleP2 = `${titlesList[1]} ${' '.repeat((pavL - titlesList[0].length)+ preL)} | `
+    const line = '-';
+    
+        console.log(`${line}`);
+        console.log(fullTitle);
+        console.log(`${line}`);
+
+    for (let i = 0; i < arr.length; i++) {
+        console.log(`${i + 1}. ${pav[i]} ${' '.repeat(pavL - pav[i].length)}|`,
+        `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`,
+        `${uPrice[i]} Eur ${' '.repeat((uPriceL - uPrice[i].toString().length))}|`,
+        `${total[i]} Eur ${' '.repeat(totalL - total[i].toString().length)}|`) 
     }   
 
+    
     
 
     return '';
