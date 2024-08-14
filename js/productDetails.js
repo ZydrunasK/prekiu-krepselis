@@ -50,23 +50,22 @@ function productDetails(arr, num) {
     unitPr = arr.unitPrice * 0.01;
     visoMok = (arr.amount * unitPr).toFixed(2);
 
-    const ids = `ID`;
-
-
-// vienu zodziu bandyk taip - susidedi visus atskirus pavadinimus, padarai array is anu ir isfiltruoji ilgiausia
-// tada pagal ilgiausia sudedi tarpus (copium)
+    let longest = ''.length;
+    
 
 
 
-    console.log('------------------------------');
+
+
+    console.log('-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length));
     console.log('Prekės informacija');
-    console.log('------------------------------');
+    console.log('-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length));
     console.log(`ID            | ${arr.id}`);
     console.log(`Pavadinimas   | ${arr.name}`);
     console.log(`Kiekis        | ${arr.amount}`);
     console.log(`Vieneto Kaina | ${unitPr} Eur`);
     console.log(`Viso mokėti   | ${visoMok} Eur`);
-    return '------------------------------';
+    return '-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length);
 }
 
 
