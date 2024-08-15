@@ -41,12 +41,11 @@ function shoppingList(arr) {
     }
 
     
-    
     let pav = [];
     let kiek = [];
     let uPrice = [];
     let total = [];
-    let eur = ' Eur';
+    // pushes each object key into its own array
     for (let i = 0; i < arr.length; i++) {          
             pav.push(arr[i].name); 
             kiek.push(arr[i].amount); 
@@ -56,6 +55,10 @@ function shoppingList(arr) {
                 total.push(num2.toFixed(2)); 
     }
     
+    total = total.map(n => n + ' Eur')
+    uPrice = uPrice.map(n => n + ' Eur')
+    
+
     //names array - pav | longest name - pavL
     let pavIlgiai = [...pav].sort((a, b) => b.length - a.length);     
     const pavL = pavIlgiai[0].length            
@@ -65,49 +68,75 @@ function shoppingList(arr) {
     const kiekL = kiekIlgiai[0].toString().length; 
     
     //unitPrice array - uPrice | longest unitPrice - uPriceL
-    let uPriceIlgiai = [...uPrice].sort((a, b) => b - a);
+    let uPriceIlgiai = [...uPrice].sort((a, b) => b.length - a.length);
     const uPriceL = (uPriceIlgiai[0].toString().length);
     
     //total price array - total | longest total price - totalL
-    let totalIlgiai = ([...total].sort((a, b) => b - a));
-    const totalL = totalIlgiai[0].toString().length;
+    let totalIlgiai = ([...total].sort((a, b) => b.length - a.length));
+    const totalL = totalIlgiai[0].length;
 
     // list number length (1.) and all longest object keys
     const listNum = (arr.length.toString().length) + 2;    
     let allLongs = [pavL, kiekL, uPriceL, totalL];
     
     // make array of longest thingies and add to full title
-    let fullTitle = ``;
     const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
+    
+    
+    let fullTitle = ``;
+    // makes full title with the right amount of spaces by compraing  title length and longest word in collum.
     for (let i = 0; i < titlesList.length; i++) {
-        if (titlesList[i].length < allLongs[i]) {
-            fullTitle += (`| ${titlesList[i]} ${' '.repeat((allLongs[i] - titlesList[i].length))}`)  
-            continue
-        } else {
-            fullTitle += (`| ${titlesList[i]}`)
-            continue
+        if (titlesList[i] === titlesList[0]) {
+            fullTitle += `| ${titlesList[0]} ${' '.repeat(allLongs[i] - titlesList[0].length + listNum)}`;
+        }
+        if (i > 0 && i < titlesList.length - 1) {
+            if (allLongs[i] >= titlesList[i].length) {
+                fullTitle += `| ${titlesList[i]} ${' '.repeat(allLongs[i] - titlesList[i].length)}`;
+            } else { 
+                fullTitle += `| ${titlesList[i]} `;
+            }   
+        }
+        if (i === titlesList.length - 1) {
+            if (allLongs[i] >= titlesList[i].length) {
+                fullTitle += `| ${titlesList[i]} ${' '.repeat(allLongs[i] - titlesList[i].length)}|`;
+            } else { 
+                fullTitle += `| ${titlesList[i]}`;
+            }   
         }
     }
-    const line = '-';
 
-    console.log(allLongs[1]);
-    console.log(titlesList[1].length);
+    const line = '-';
     
-    console.log(`${line}`);
+    console.log(line.repeat(fullTitle.length));
     console.log(fullTitle);
-    console.log(`${line}`);
+    console.log(line.repeat(fullTitle.length));
+
 
     for (let i = 0; i < arr.length; i++) {
-        console.log(`| ${i + 1}. ${pav[i]} ${' '.repeat(pavL - pav[i].length)}|`,
-        `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`,
-        `${uPrice[i]} Eur ${' '.repeat((uPriceL - uPrice[i].toString().length))}|`,
-        `${total[i]} Eur ${' '.repeat(totalL - total[i].toString().length)}|`) 
+        if (pavL + listNum > titlesList[0].length) {
+            c1 = `| ${i + 1}. ${pav[i]} ${' '.repeat(pavL - pav[i].length)}|`;  
+        } else {
+            c1 = `| ${i + 1}. ${pav[i]} ${' '.repeat(titlesList[0].length - pav[i].length)}|`;
+        }
+        if (kiekL > titlesList[1].length) {
+            c2 = `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`;
+        } else {
+            c2 = `${kiek[i]} ${' '.repeat(titlesList[1].length - kiek[i].toString().length)}|`;
+        }
+        if (uPriceL > titlesList[2].length) {
+            c3 = `${uPrice[i]} ${' '.repeat((uPriceL - uPrice[i].toString().length))}|`;
+        } else {
+            c3 = `${uPrice[i]} ${' '.repeat((titlesList[2].length - uPrice[i].toString().length))}|`;
+        }
+        if (totalL > titlesList[3].length) {
+            c4 = `${total[i]} ${' '.repeat(totalL - total[i].toString().length)}|`;
+        } else {
+            c4 = `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}|`;
+        }
+
+        console.log(c1, c2, c3, c4);
+        
     }   
-
-    
-    
-
-    return '';
-
+   return line.repeat(fullTitle.length);
 }
 console.log(shoppingList(firstShoppingList)); 
