@@ -7,6 +7,7 @@ export function shoppingList(arr) {
         return 'Šiuo metu, jūsų prekių krepšelis yra tuščias.';
     }
     
+    // these need to be made into ends with instead of range of numbers
 /*     if (arr.length >= 10 && arr.length <= 20) {
         console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekių:`);   
     } else if (arr.length > 1 && arr.length < 10){
