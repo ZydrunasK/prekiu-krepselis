@@ -62,7 +62,11 @@ export function shoppingList(arr) {
     // makes full title with the right amount of spaces by compraing  title length and longest word in collum.
     for (let i = 0; i < titlesList.length; i++) {
         if (titlesList[i] === titlesList[0]) {
-            fullTitle += `| ${titlesList[0]} ${' '.repeat(allLongs[i] - titlesList[0].length + listNumFull)}`;
+            if (allLongs[i] + listNumFull >= titlesList[i].length) {
+                fullTitle += `${titlesList[0]} ${' '.repeat(allLongs[i] - titlesList[0].length + listNumFull)}`
+            } else { 
+                fullTitle += `${titlesList[i]} `;
+            } 
         }
         if (i > 0 && i < titlesList.length - 1) {
             if (allLongs[i] >= titlesList[i].length) {
@@ -73,12 +77,15 @@ export function shoppingList(arr) {
         }
         if (i === titlesList.length - 1) {
             if (allLongs[i] >= titlesList[i].length) {
-                fullTitle += `| ${titlesList[i]} ${' '.repeat(allLongs[i] - titlesList[i].length)}|`;
+                fullTitle += `| ${titlesList[i]}${' '.repeat(allLongs[i] - titlesList[i].length)}`;     // there has to be no gap between space repeat and text or else its gonna be too long
             } else { 
                 fullTitle += `| ${titlesList[i]}`;
             }   
         }
     }
+
+
+
 
     const line = '-';
     
@@ -93,9 +100,9 @@ export function shoppingList(arr) {
         let c4 = ``;
         pav[i] = `${i + 1}. ${pav[i]}`;
         if (pavL + listNumFull > titlesList[0].length) {
-            c1 = `| ${pav[i]} ${' '.repeat((pavL + listNumFull) - (pav[i].length))}|`;  
+            c1 = `${pav[i]} ${' '.repeat((pavL + listNumFull) - (pav[i].length))}|`;  
         } else {
-            c1 = `| ${pav[i]} ${' '.repeat(titlesList[0].length - pav[i].length)}|`;
+            c1 = `${pav[i]} ${' '.repeat(titlesList[0].length - pav[i].length)}|`;
         }
         if (kiekL > titlesList[1].length) {
             c2 = `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`;
@@ -108,42 +115,15 @@ export function shoppingList(arr) {
             c3 = `${uPrice[i]} ${' '.repeat((titlesList[2].length - uPrice[i].toString().length))}|`;
         }
         if (totalL > titlesList[3].length) {
-            c4 = `${total[i]} ${' '.repeat(totalL - total[i].toString().length)}|`;
+            c4 = `${total[i]} ${' '.repeat(totalL - total[i].toString().length)}`;
         } else {
-            c4 = `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}|`;
+            c4 = `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}`;
         }
         console.log(c1, c2, c3, c4);  
           
     }   
    return line.repeat(fullTitle.length);
 }
-
-// 1 - preke
-// 2 - prekes
-// 3 - prekes
-// 4 - prekes
-// 5 - prekes
-// 6 - prekes
-// 7 - prekes
-// 8 - prekes
-// 9 - prekes
-// 10 - prekiu
-// 11 - prekiu
-// 12 - prekiu
-// 13 - prekiu
-// 14 - prekiu
-// 15 - prekiu
-// 16 - prekiu
-// 17 - prekiu
-// 18 - prekiu
-// 19 - prekiu
-// 20 - prekiu
-// 21 - preke
-// 22 - prekes
-// 23 - prekes
-// 30 - prekiu
-// 31 - preke
-// 32 - prekes
 
 // 1 || ends with 1 - preke
 // 2-9 || ends with 2-9 prekes

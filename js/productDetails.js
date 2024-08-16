@@ -1,38 +1,4 @@
-const firstShoppingList = [
-    {
-        id: 1,
-        name: 'Pomidoras',
-        amount: 1000000,
-        unitPrice: 199,
-    },
-    {
-        id: 3,
-        name: 'Agurkas',
-        amount: 2,
-        unitPrice: 50,
-    },
-    {
-        id: 7,
-        name: 'Svogūnas',
-        amount: 1,
-        unitPrice: 45,
-    },
-];
-
-const singleProductShoppingList = [
-    {
-        id: 2,
-        name: 'Kivi',
-        amount: 23,
-        unitPrice: 14,
-    },
-];
-
-
-
-
-
-function productDetails(arr, num) {
+export function productDetails(arr, num) {
     if (Number.isInteger(num) === false) {
         return 'ERROR: second input must be a natural number'
     }
@@ -47,29 +13,44 @@ function productDetails(arr, num) {
         return `Prekė, su ID: ${num} neegzistuoja.`
     }
 
-    unitPr = arr.unitPrice * 0.01;
-    visoMok = (arr.amount * unitPr).toFixed(2);
+    let obj = [];
+    // pushes each object key into its own array   
+    obj.push(arr.id)
+    obj.push(arr.name); 
+    obj.push(arr.amount); 
+    let num1 = (arr.unitPrice * 0.01);
+    obj.push(num1.toFixed(2) + ' Eur');
+    let num2 = (num1 * arr.amount);
+    obj.push(num2.toFixed(2) + ' Eur'); 
 
-    let longest = ''.length;
+    let objL = [...obj].sort((a, b) => b.toString().length - a.toString().length);
+    objL = objL[0].length;
+
+    const list = ['ID', 'Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti']
+    let listL = [...list].sort((a, b) => b.length - a.length);
+    listL = listL[0].length;
+
     
 
+    const line = '-'.repeat(objL + listL + 3);
 
-
-
-
-    console.log('-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length));
+    
+    console.log(line);
     console.log('Prekės informacija');
-    console.log('-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length));
-    console.log(`ID            | ${arr.id}`);
-    console.log(`Pavadinimas   | ${arr.name}`);
-    console.log(`Kiekis        | ${arr.amount}`);
-    console.log(`Vieneto Kaina | ${unitPr} Eur`);
-    console.log(`Viso mokėti   | ${visoMok} Eur`);
-    return '-'.repeat(`Vieneto Kaina | ${unitPr} Eur`.length);
+    console.log(line);
+    
+    
+    for (let i = 0; i < 5; i++) {
+        let l1 = ``;
+        let l2 = ``;
+        l1 = (`${list[i]} ${' '.repeat(listL - list[i].length)}|`);
+        l2 = (`${obj[i]}`);
+        console.log(l1, l2);
+        
+        
+    }
+    return line;
 }
-
-
-console.log(productDetails(singleProductShoppingList, 2));
 
 
 

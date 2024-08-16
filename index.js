@@ -1,8 +1,11 @@
 import { shoppingList } from "./js/shoppingList.js";
+import { productDetails } from "./js/productDetails.js";
 
+const emptyList = [];
 
+console.log(shoppingList(emptyList));
 
-
+console.log(productDetails(emptyList, 42069));
 
 const firstShoppingList = [
     {
@@ -23,19 +26,27 @@ const firstShoppingList = [
         amount: 1,
         unitPrice: 45,
     },
+];
+
+console.log(shoppingList(firstShoppingList));
+
+console.log(productDetails(firstShoppingList, 42069));
+
+console.log(productDetails(firstShoppingList, 3));
+
+console.log(productDetails(firstShoppingList, 7));
+
+const singleProductShoppingList = [
     {
-        id: 9,
-        name: 'Makaronas',
-        amount: 125,
-        unitPrice: 1,
-    },
-    {
-        id: 9,
-        name: 'asdasdasdasdasdasd',
-        amount: 99999999,
-        unitPrice: 999999,
+        id: 2,
+        name: 'Kivi',
+        amount: 23,
+        unitPrice: 14,
     },
 ];
 
+console.log(shoppingList(singleProductShoppingList));
 
-console.log(shoppingList(firstShoppingList)); 
+console.log(productDetails(singleProductShoppingList, 42069));
+
+console.log(productDetails(singleProductShoppingList, 2));
