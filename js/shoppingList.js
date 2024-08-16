@@ -1,21 +1,67 @@
 export function shoppingList(arr) {
-    if (Array.isArray(arr) === false) {
-        return 'ERROR: input must be an array'
+    if (!Array.isArray(arr)) {
+        return 'ERROR: įvestis turi būti masyvas'
     }
-    
     if (arr.length === 0) {
         return 'Šiuo metu, jūsų prekių krepšelis yra tuščias.';
     }
+    for (let i = 0; i < arr.length; i++) {
+        if (Array.isArray(arr[i])) {
+            return `ERROR: objektas ${i + 1} negali būti masyvas`
+        };
+    }
+    for (let i = 0; i < arr.length; i++) {
+        if (Object.keys(arr[i]).length === 0) {
+            return `ERROR: Objekte ${i + 1} nėra informacijos`
+        };
+    }
     
-    // these need to be made into ends with instead of range of numbers
-/*     if (arr.length >= 10 && arr.length <= 20) {
+    const objKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
+
+    for (let i = 0; i < arr.length; i++) {
+        if ((Object.keys(arr[i])[0]) !== objKeys[0]) {
+            return `ERROR: Neteisingi raktai objekte ${i + 1}`
+        };
+        if ((Object.keys(arr[i])[1]) !== objKeys[1]) {
+            return `ERROR: Neteisingi raktai objekte ${i + 1}`
+        };
+        if ((Object.keys(arr[i])[2]) !== objKeys[2]) {
+            return `ERROR: Neteisingi raktai objekte ${i + 1}`
+        };
+        if ((Object.keys(arr[i])[3]) !== objKeys[3]) {
+            return `ERROR: Neteisingi raktai objekte ${i + 1}`
+        };
+    }
+    for (let i = 0; i < arr.length; i++) {
+        if (!Number.isSafeInteger(arr[i].id) || arr[i].id < 0) {
+            return `ERROR: id reikšmė neteisinga objekte ${i + 1}`
+        };
+        if (typeof arr[i].name !== 'string') {
+            return `ERROR: pavadinimas objekte ${i + 1} turi būti string tipo`
+        };
+        if (!Number.isSafeInteger(arr[i].amount) || arr[i].amount < 0) {
+            return `ERROR: Objekto ${i + 1} įvestas amount turi būti sveikasis teigiamas skaičius`
+        };
+        if (!Number.isSafeInteger(arr[i].unitPrice) || arr[i].unit < 0) {
+            return `ERROR: unit price įvestis objekte ${i + 1} turi būti sveikasis teigiamas skaičius`
+        };
+    }
+
+    const arrEnd1 = arr.length.toString().slice(-1);
+    const arrEnd2 = arr.length.toString().slice(-2);
+    let arrEnd2only = arr.length.toString();
+    arrEnd2only = arrEnd2only[arrEnd2only.length - 2];;
+    
+    if (arrEnd1 === '0' || arrEnd2only === '1') {
         console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekių:`);   
-    } else if (arr.length > 1 && arr.length < 10){
-        console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekės:`);   
-    } else if (arr.length = 1){
+    }
+    if (arrEnd1 === '1' && arrEnd2 !== '11') {
         console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekė:`);   
-    } */
-    
+    }
+    if (arrEnd1 !== '0' && arrEnd2only !== '1' && arrEnd1 !== '1') {
+        console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekės:`);  
+    }
+
     let pav = [];
     let kiek = [];
     let uPrice = [];
@@ -49,14 +95,11 @@ export function shoppingList(arr) {
     let totalIlgiai = ([...total].sort((a, b) => b.length - a.length));
     const totalL = totalIlgiai[0].length;
 
-    // list number length (1.) and all longest object keys
-    const listNum = (arr.length.toString().length);    // length of longest list number
+    // list number length(1.) and all longest object keys
     const listNumFull = (arr.length.toString().length) + 2;    // +2 accounts for the dot and space after the number
     let allLongs = [pavL, kiekL, uPriceL, totalL];
     
-    // make array of longest thingies and add to full title
     const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
-    
     
     let fullTitle = ``;
     // makes full title with the right amount of spaces by compraing  title length and longest word in collum.
@@ -83,9 +126,6 @@ export function shoppingList(arr) {
             }   
         }
     }
-
-
-
 
     const line = '-';
     
@@ -119,12 +159,10 @@ export function shoppingList(arr) {
         } else {
             c4 = `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}`;
         }
-        console.log(c1, c2, c3, c4);  
-          
+        console.log(c1, c2, c3, c4);      
     }   
    return line.repeat(fullTitle.length);
 }
 
-// 1 || ends with 1 - preke
-// 2-9 || ends with 2-9 prekes
-// 10-20 || end with 0 || ends with 10-20 - prekiu
+
+

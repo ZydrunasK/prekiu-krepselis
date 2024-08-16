@@ -1,5 +1,6 @@
 import { shoppingList } from "./js/shoppingList.js";
 import { productDetails } from "./js/productDetails.js";
+// parašykite npm run index į terminalą, kad pamatytumėte rezultatą.
 
 const emptyList = [];
 
@@ -32,6 +33,8 @@ console.log(shoppingList(firstShoppingList));
 
 console.log(productDetails(firstShoppingList, 42069));
 
+console.log(productDetails(firstShoppingList, 1));
+
 console.log(productDetails(firstShoppingList, 3));
 
 console.log(productDetails(firstShoppingList, 7));
@@ -50,3 +53,4 @@ console.log(shoppingList(singleProductShoppingList));
 console.log(productDetails(singleProductShoppingList, 42069));
 
 console.log(productDetails(singleProductShoppingList, 2));
+
