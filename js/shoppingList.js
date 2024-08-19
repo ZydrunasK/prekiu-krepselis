@@ -16,21 +16,17 @@ export function shoppingList(arr) {
         };
     }
     
-    const objKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
+    const requiredKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
 
     for (let i = 0; i < arr.length; i++) {
-        if ((Object.keys(arr[i])[0]) !== objKeys[0]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[1]) !== objKeys[1]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[2]) !== objKeys[2]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[3]) !== objKeys[3]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
+        if (Object.keys(arr[i]).length !== requiredKeys.length) {
+            return `ERROR: Neteisingi raktai objekte ${i + 1}`;
+        }
+        for (const key in arr[i]) {
+            if (!requiredKeys.includes(key)) {
+                return `ERROR: Neteisingi raktai objekte ${i + 1}`;
+            }
+        }
     }
     for (let i = 0; i < arr.length; i++) {
         if (!Number.isSafeInteger(arr[i].id) || arr[i].id < 0) {
@@ -42,7 +38,7 @@ export function shoppingList(arr) {
         if (!Number.isSafeInteger(arr[i].amount) || arr[i].amount < 0) {
             return `ERROR: Objekto ${i + 1} įvestas amount turi būti sveikasis teigiamas skaičius`
         };
-        if (!Number.isSafeInteger(arr[i].unitPrice) || arr[i].unit < 0) {
+        if (!Number.isSafeInteger(arr[i].unitPrice) || arr[i].unitPrice < 0) {
             return `ERROR: unit price įvestis objekte ${i + 1} turi būti sveikasis teigiamas skaičius`
         };
     }
@@ -62,22 +58,19 @@ export function shoppingList(arr) {
         console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekės:`);  
     }
 
-    let pav = [];
-    let kiek = [];
-    let uPrice = [];
-    let total = [];
-    // pushes each object key into its own array
+    const pav = [];
+    const kiek = [];
+    const uPrice = [];
+    const total = [];
+
     for (let i = 0; i < arr.length; i++) {          
             pav.push(arr[i].name); 
             kiek.push(arr[i].amount); 
-            let num1 = (arr[i].unitPrice * 0.01);
-                uPrice.push(num1.toFixed(2));
-            let num2 = (uPrice[i] * kiek[i]);
-                total.push(num2.toFixed(2)); 
+            const num1 = (arr[i].unitPrice * 0.01);
+                uPrice.push(num1.toFixed(2) + ' Eur');
+            const num2 = ((arr[i].unitPrice * arr[i].amount) * 0.01);
+                total.push(num2.toFixed(2) + ' Eur'); 
     }
-    
-    total = total.map(n => n + ' Eur')
-    uPrice = uPrice.map(n => n + ' Eur')
     
     //names array - pav | longest name - pavL
     let pavIlgiai = [...pav].sort((a, b) => b.length - a.length);     
@@ -101,7 +94,7 @@ export function shoppingList(arr) {
     
     const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
     
-    let fullTitle = ``;
+    let fullTitle = '';
     // makes full title with the right amount of spaces by compraing  title length and longest word in collum.
     for (let i = 0; i < titlesList.length; i++) {
         if (titlesList[i] === titlesList[0]) {
@@ -120,7 +113,7 @@ export function shoppingList(arr) {
         }
         if (i === titlesList.length - 1) {
             if (allLongs[i] >= titlesList[i].length) {
-                fullTitle += `| ${titlesList[i]}${' '.repeat(allLongs[i] - titlesList[i].length)}`;     // there has to be no gap between space repeat and text or else its gonna be too long
+                fullTitle += `| ${titlesList[i]}${' '.repeat(allLongs[i] - titlesList[i].length)}`;     // neturi buti tarpo tarp teksto ir repeat kitaip gausis per ilgas
             } else { 
                 fullTitle += `| ${titlesList[i]}`;
             }   
