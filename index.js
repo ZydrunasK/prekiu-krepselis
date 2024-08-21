@@ -1,6 +1,5 @@
 import { shoppingList } from "./js/shoppingList.js";
 import { productDetails } from "./js/productDetails.js";
-// parašykite npm run index į terminalą, kad pamatytumėte rezultatą.
 
 // Vieta reikiamų failų importavimui... jei reikia tokių 👀
 
@@ -141,4 +140,3 @@ Vieneto kaina | 0.14 Eur
 Viso mokėti   | 3.22 Eur
 ------------------------
 */
-
