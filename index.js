@@ -35,22 +35,22 @@ console.log(productDetails(firstShoppingList, 42069));
 
 console.log(productDetails(firstShoppingList, 1));
 
-console.log(productDetails(firstShoppingList, 3));
+// console.log(productDetails(firstShoppingList, 3));
 
-console.log(productDetails(firstShoppingList, 7));
+// console.log(productDetails(firstShoppingList, 7));
 
-const singleProductShoppingList = [
-    {
-        id: 2,
-        name: 'Kivi',
-        amount: 23,
-        unitPrice: 14,
-    },
-];
+// const singleProductShoppingList = [
+//     {
+//         id: 2,
+//         name: 'Kivi',
+//         amount: 23,
+//         unitPrice: 14,
+//     },
+// ];
 
-console.log(shoppingList(singleProductShoppingList));
+// console.log(shoppingList(singleProductShoppingList));
 
-console.log(productDetails(singleProductShoppingList, 42069));
+// console.log(productDetails(singleProductShoppingList, 42069));
 
-console.log(productDetails(singleProductShoppingList, 2));
+// console.log(productDetails(singleProductShoppingList, 2));
 

@@ -47,21 +47,20 @@ export function productDetails(arr, num) {
         };
     }
 
-    arr = arr.filter(n => n.id === num);
-    arr = arr[0];
+    const objFromArr = arr.filter(n => n.id === num)[0];
+    
 
-    if (arr === undefined) {
+    if (objFromArr === undefined) {
         return `Prekė, su ID: ${num} neegzistuoja.`
     }
 
-    let obj = [];
-    // pushes each object key into its own array   
-    obj.push(arr.id)
-    obj.push(arr.name); 
-    obj.push(arr.amount); 
-    let num1 = (arr.unitPrice * 0.01);
+    let obj = [];           // reikiamas objektas paversetas i array  
+    obj.push(objFromArr.id)
+    obj.push(objFromArr.name); 
+    obj.push(objFromArr.amount); 
+    let num1 = (objFromArr.unitPrice * 0.01);
     obj.push(num1.toFixed(2) + ' Eur');
-    let num2 = (num1 * arr.amount);
+    let num2 = (num1 * objFromArr.amount);
     obj.push(num2.toFixed(2) + ' Eur'); 
 
     let objL = [...obj].sort((a, b) => b.toString().length - a.toString().length);
@@ -71,20 +70,15 @@ export function productDetails(arr, num) {
     let listL = [...list].sort((a, b) => b.length - a.length);
     listL = listL[0].length;
 
-    const line = '-'.repeat(objL + listL + 3);
-
-    console.log(line);
-    console.log('Prekės informacija');
-    console.log(line);
+    const title = 'Prekės informacija';
+    const line = `${'-'.repeat(objL + listL + 3)}`;
     
-    for (let i = 0; i < 5; i++) {
-        let l1 = ``;
-        let l2 = ``;
-        l1 = (`${list[i]} ${' '.repeat(listL - list[i].length)}|`);
-        l2 = (`${obj[i]}`);
-        console.log(l1, l2);
+    let table = '';
+    for (let i = 0; i < obj.length; i++) {
+        table += (`${list[i]} ${' '.repeat(listL - list[i].length)}| ${obj[i]}\n`);
     }
-    return line;
+    const finishedList = `${line}\n${title}\n${line}\n${table}${line}\n`;
+    return finishedList;
 }
 
 
