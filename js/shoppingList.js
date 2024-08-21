@@ -1,3 +1,5 @@
+import * as f from "./functions.js";
+
 export function shoppingList(arr) {
     if (!Array.isArray(arr)) {
         return 'ERROR: įvestis turi būti masyvas'
@@ -17,17 +19,8 @@ export function shoppingList(arr) {
     }
     
     const requiredKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
+    f.validateObjInArr(arr, requiredKeys);
 
-    for (let i = 0; i < arr.length; i++) {
-        if (Object.keys(arr[i]).length !== requiredKeys.length) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`;
-        }
-        for (const key in arr[i]) {
-            if (!requiredKeys.includes(key)) {
-                return `ERROR: Neteisingi raktai objekte ${i + 1}`;
-            }
-        }
-    }
     for (let i = 0; i < arr.length; i++) {
         if (!Number.isSafeInteger(arr[i].id) || arr[i].id < 0) {
             return `ERROR: id reikšmė neteisinga objekte ${i + 1}`
@@ -43,118 +36,95 @@ export function shoppingList(arr) {
         };
     }
 
-    const arrEnd1 = arr.length.toString().slice(-1);
-    const arrEnd2 = arr.length.toString().slice(-2);
-    let arrEnd2only = arr.length.toString();
-    arrEnd2only = arrEnd2only[arrEnd2only.length - 2];;
-    
-    if (arrEnd1 === '0' || arrEnd2only === '1') {
-        console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekių:`);   
-    }
-    if (arrEnd1 === '1' && arrEnd2 !== '11') {
-        console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekė:`);   
-    }
-    if (arrEnd1 !== '0' && arrEnd2only !== '1' && arrEnd1 !== '1') {
-        console.log(`Jūsų prekių krepšelyje yra ${arr.length} prekės:`);  
-    }
-
     const pav = [];
     const kiek = [];
     const uPrice = [];
     const total = [];
+    const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
 
     for (let i = 0; i < arr.length; i++) {          
             pav.push(arr[i].name); 
             kiek.push(arr[i].amount); 
-            const num1 = (arr[i].unitPrice * 0.01);
-                uPrice.push(num1.toFixed(2) + ' Eur');
-            const num2 = ((arr[i].unitPrice * arr[i].amount) * 0.01);
-                total.push(num2.toFixed(2) + ' Eur'); 
+            uPrice.push(f.formatPrice(arr[i].unitPrice));
+            total.push(f.formatPrice(arr[i].unitPrice * arr[i].amount));
     }
     
-    //names array - pav | longest name - pavL
-    let pavIlgiai = [...pav].sort((a, b) => b.length - a.length);     
-    const pavL = pavIlgiai[0].length            
+    //names array - pav | ilgiausias name - pavL |
+    const listNumFull = (arr.length.toString().length) + 2;    // +2 del tasko ir tarpo ('1. ') po skaiciaus     
+    const pavIlgiai = [...pav].sort((a, b) => b.length - a.length);     
+    const pavL = pavIlgiai[0].length + listNumFull;             
+ 
     
-    //amount array - kiek | longest amount - kiekL
-    let kiekIlgiai = [...kiek].sort((a, b) => b - a);     
+
+    //amount array - kiek | ilgiausias amount - kiekL
+    const kiekIlgiai = [...kiek].sort((a, b) => b - a);     
     const kiekL = kiekIlgiai[0].toString().length; 
     
-    //unitPrice array - uPrice | longest unitPrice - uPriceL
-    let uPriceIlgiai = [...uPrice].sort((a, b) => b.length - a.length);
-    const uPriceL = (uPriceIlgiai[0].toString().length);
+    //unitPrice array - uPrice | ilgiausias unitPrice - uPriceL
+    const uPriceIlgiai = [...uPrice].sort((a, b) => b.length - a.length);
+    const uPriceL = (uPriceIlgiai[0].length);
     
-    //total price array - total | longest total price - totalL
-    let totalIlgiai = ([...total].sort((a, b) => b.length - a.length));
+    //total price array - total | ilgiausias total price - totalL
+    const totalIlgiai = ([...total].sort((a, b) => b.length - a.length));
     const totalL = totalIlgiai[0].length;
 
-    // list number length(1.) and all longest object keys
-    const listNumFull = (arr.length.toString().length) + 2;    // +2 accounts for the dot and space after the number
-    let allLongs = [pavL, kiekL, uPriceL, totalL];
+    // list number length(1. ) and all ilgiausias object keys
+    const longestObjKeys = [pavL, kiekL, uPriceL, totalL];
     
-    const titlesList = ['Pavadinimas', 'Kiekis', 'Vieneto kaina', 'Viso mokėti'];
     
     let fullTitle = '';
-    // makes full title with the right amount of spaces by compraing  title length and longest word in collum.
     for (let i = 0; i < titlesList.length; i++) {
         if (titlesList[i] === titlesList[0]) {
-            if (allLongs[i] + listNumFull >= titlesList[i].length) {
-                fullTitle += `${titlesList[0]} ${' '.repeat(allLongs[i] - titlesList[0].length + listNumFull)}`
+            if (longestObjKeys[i] >= titlesList[i].length) {
+                fullTitle += `${titlesList[0]} ${' '.repeat(longestObjKeys[i] - titlesList[0].length)}`
             } else { 
                 fullTitle += `${titlesList[i]} `;
             } 
         }
         if (i > 0 && i < titlesList.length - 1) {
-            if (allLongs[i] >= titlesList[i].length) {
-                fullTitle += `| ${titlesList[i]} ${' '.repeat(allLongs[i] - titlesList[i].length)}`;
+            if (longestObjKeys[i] >= titlesList[i].length) {
+                fullTitle += `| ${titlesList[i]} ${' '.repeat(longestObjKeys[i] - titlesList[i].length)}`;
             } else { 
                 fullTitle += `| ${titlesList[i]} `;
             }   
         }
         if (i === titlesList.length - 1) {
-            if (allLongs[i] >= titlesList[i].length) {
-                fullTitle += `| ${titlesList[i]}${' '.repeat(allLongs[i] - titlesList[i].length)}`;     // neturi buti tarpo tarp teksto ir repeat kitaip gausis per ilgas
+            if (longestObjKeys[i] >= titlesList[i].length) {
+                fullTitle += `| ${titlesList[i]}${' '.repeat(longestObjKeys[i] - titlesList[i].length)}`;     // neturi buti tarpo tarp teksto ir repeat kitaip gausis per ilgas
             } else { 
                 fullTitle += `| ${titlesList[i]}`;
             }   
         }
     }
 
-    const line = '-';
-    
-    console.log(line.repeat(fullTitle.length));
-    console.log(fullTitle);
-    console.log(line.repeat(fullTitle.length));
-
+    let table = '';
     for (let i = 0; i < arr.length; ++i) {
-        let c1 = ``;
-        let c2 = ``;
-        let c3 = ``;
-        let c4 = ``;
         pav[i] = `${i + 1}. ${pav[i]}`;
-        if (pavL + listNumFull > titlesList[0].length) {
-            c1 = `${pav[i]} ${' '.repeat((pavL + listNumFull) - (pav[i].length))}|`;  
+        if (pavL > titlesList[0].length) {
+            table += `${pav[i]} ${' '.repeat(pavL - (pav[i].length))}| `;  
         } else {
-            c1 = `${pav[i]} ${' '.repeat(titlesList[0].length - pav[i].length)}|`;
+            table += `${pav[i]} ${' '.repeat(titlesList[0].length - pav[i].length)}| `;
         }
         if (kiekL > titlesList[1].length) {
-            c2 = `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}|`;
+            table += `${kiek[i]} ${' '.repeat(kiekL - kiek[i].toString().length)}| `;
         } else {
-            c2 = `${kiek[i]} ${' '.repeat(titlesList[1].length - kiek[i].toString().length)}|`;
+            table += `${kiek[i]} ${' '.repeat(titlesList[1].length - kiek[i].toString().length)}| `;
         }
         if (uPriceL > titlesList[2].length) {
-            c3 = `${uPrice[i]} ${' '.repeat((uPriceL - uPrice[i].toString().length))}|`;
+            table += `${uPrice[i]} ${' '.repeat((uPriceL - uPrice[i].toString().length))}| `;
         } else {
-            c3 = `${uPrice[i]} ${' '.repeat((titlesList[2].length - uPrice[i].toString().length))}|`;
+            table += `${uPrice[i]} ${' '.repeat((titlesList[2].length - uPrice[i].toString().length))}| `;
         }
         if (totalL > titlesList[3].length) {
-            c4 = `${total[i]} ${' '.repeat(totalL - total[i].toString().length)}`;
+            table += `${total[i]} ${' '.repeat(totalL - total[i].toString().length)}\n`;
         } else {
-            c4 = `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}`;
-        }
-        console.log(c1, c2, c3, c4);      
-    }   
-   return line.repeat(fullTitle.length);
+            table += `${total[i]} ${' '.repeat(titlesList[3].length - total[i].toString().length)}\n`;
+        }   
+    } 
+    
+    const line = '-'.repeat(fullTitle.length);  
+    return f.frankestein(line, fullTitle, table);
+
 }
 
 

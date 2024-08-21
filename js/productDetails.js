@@ -1,3 +1,5 @@
+import * as f from "./functions.js";
+
 export function productDetails(arr, num) {
     const objKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
 
@@ -17,21 +19,10 @@ export function productDetails(arr, num) {
             return `ERROR: objektas ${i + 1} negali būti masyvas`
         };
     }
-    
-    for (let i = 0; i < arr.length; i++) {
-        if ((Object.keys(arr[i])[0]) !== objKeys[0]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[1]) !== objKeys[1]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[2]) !== objKeys[2]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-        if ((Object.keys(arr[i])[3]) !== objKeys[3]) {
-            return `ERROR: Neteisingi raktai objekte ${i + 1}`
-        };
-    }
+
+    const requiredKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
+    f.validateObjInArr(arr, requiredKeys);
+
     for (let i = 0; i < arr.length; i++) {
         if (!Number.isSafeInteger(arr[i].id) || arr[i].id < 0) {
             return `ERROR: id reikšmė neteisinga objekte ${i + 1}`
@@ -48,20 +39,18 @@ export function productDetails(arr, num) {
     }
 
     const objFromArr = arr.filter(n => n.id === num)[0];
-    
-
     if (objFromArr === undefined) {
         return `Prekė, su ID: ${num} neegzistuoja.`
     }
 
-    let obj = [];           // reikiamas objektas paversetas i array  
+    // reikiamas objektas paverstas i array
+    const obj = [];             
     obj.push(objFromArr.id)
     obj.push(objFromArr.name); 
     obj.push(objFromArr.amount); 
-    let num1 = (objFromArr.unitPrice * 0.01);
-    obj.push(num1.toFixed(2) + ' Eur');
-    let num2 = (num1 * objFromArr.amount);
-    obj.push(num2.toFixed(2) + ' Eur'); 
+    obj.push(f.formatPrice(objFromArr.unitPrice));
+    obj.push(f.formatPrice(objFromArr.unitPrice * objFromArr.amount));
+
 
     let objL = [...obj].sort((a, b) => b.toString().length - a.toString().length);
     objL = objL[0].length;
@@ -77,10 +66,6 @@ export function productDetails(arr, num) {
     for (let i = 0; i < obj.length; i++) {
         table += (`${list[i]} ${' '.repeat(listL - list[i].length)}| ${obj[i]}\n`);
     }
-    const finishedList = `${line}\n${title}\n${line}\n${table}${line}\n`;
-    return finishedList;
+
+    return f.frankestein(line, title, table);
 }
-
-
-
-
