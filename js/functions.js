@@ -11,6 +11,12 @@ export function validateObjInArr(arr, requiredKeys) {
     }
 }
 
+export function validateArr(arr) {
+    if (arr.length === 0) {
+        return 'Šiuo metu, jūsų prekių krepšelis yra tuščias.';
+    }
+}
+
 export function formatPrice(price) {
     return (price * 0.01).toFixed(2) + ' Eur';
 }

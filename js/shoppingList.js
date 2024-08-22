@@ -1,11 +1,11 @@
 import * as f from "./functions.js";
 
 export function shoppingList(arr) {
+
+    f.validateArr(arr)
+
     if (!Array.isArray(arr)) {
         return 'ERROR: įvestis turi būti masyvas';
-    }
-    if (arr.length === 0) {
-        return 'Šiuo metu, jūsų prekių krepšelis yra tuščias.';
     }
     for (let i = 0; i < arr.length; i++) {
         if (Array.isArray(arr[i])) {
@@ -17,7 +17,7 @@ export function shoppingList(arr) {
             return `ERROR: Objekte ${i + 1} nėra informacijos`;
         };
     }
-    
+
     const requiredKeys = [ 'id', 'name', 'amount', 'unitPrice' ];
     f.validateObjInArr(arr, requiredKeys);
 
