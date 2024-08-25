@@ -45,7 +45,6 @@ export function shoppingList(arr) {
      
     const longestObjKeys = [pavL, kiekL, uPriceL, totalL];
 
-    
     let fullTitle = '';
     for (let i = 0; i < titlesList.length; i++) {
         if (i < titlesList.length - 1) {
@@ -64,8 +63,7 @@ export function shoppingList(arr) {
     } 
     
     const line = '-'.repeat(fullTitle.length);  
-    f.numOfProducts(arr);
-    return f.frankestein(line, fullTitle, table);
+    return f.numOfProducts(arr) + f.frankestein(line, fullTitle, table);
 }
 
 
